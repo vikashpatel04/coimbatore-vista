@@ -1,97 +1,180 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { placesData } from "../data/placesData";
 
 const Home = () => {
-  const images = [
-    { id: 1, src: "/images/5.png", title: "City View" },
-    { id: 2, src: "/images/2.png", title: "Western Ghats" },
-    { id: 3, src: "/images/1.png", title: "Ancient Temples" },
-    { id: 4, src: "/images/3.jpg", title: "Tea Plantations" },
-    { id: 5, src: "/images/4.jpg", title: "Lush Greenery" }
-  ];
+  const navigate = useNavigate();
+  const [featuredPlaces, setFeaturedPlaces] = useState([]);
 
-  const featuredTours = [
-    { id: 1, name: "Ooty Hills Tour", price: 5000, image: "/ooty.jpeg" },
-    { id: 2, name: "Wildlife Safari", price: 3500, image: "/wildlife.jpg" },
-    { id: 3, name: "Temple & Culture Trip", price: 2500, image: "/temple.jpg" }
-  ];
+  useEffect(() => {
+    // Get 3 random places for featured section
+    const randomPlaces = [...placesData]
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
+    setFeaturedPlaces(randomPlaces);
+  }, []);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section 
-        className="relative h-screen flex flex-col items-center justify-center text-center text-white"
-        style={{ backgroundImage: "url('/cbe.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative z-10">
-          <h1 className="text-5xl font-bold">Welcome to Coimbatore Voyage Vista</h1>
-          <p className="text-xl mt-3">Explore the beauty of Coimbatore with the best travel packages.</p>
-          <div className="mt-6">
-            <Link to="/tours">
-              <button className="bg-blue-500 text-white px-6 py-3 rounded text-lg shadow-lg hover:bg-blue-600">
-                Explore Tours
-              </button>
-            </Link>
+      <section className="bg-blue-700 text-white py-20 px-4 bg-gradient-to-r from-blue-600 to-blue-800">
+        <div className="container mx-auto max-w-6xl">
+          <div className="md:flex items-center justify-between">
+            <div className="md:w-1/2 mb-10 md:mb-0">
+              <h1 className="text-5xl font-bold mb-6">Welcome to Coimbatore Explorer</h1>
+              <p className="text-xl mb-8 text-blue-100">
+                Discover the Manchester of South India. From ancient temples to modern malls, 
+                adventure parks to serene nature spots - explore the best of Coimbatore with our 
+                curated guides and personalized trip plans.
+              </p>
+              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <button
+                  onClick={() => navigate("/places")}
+                  className="px-8 py-3 bg-white text-blue-700 text-lg font-medium rounded-lg hover:bg-blue-50 transition shadow-lg"
+                >
+                  Explore Places
+                </button>
+                <button
+                  onClick={() => navigate("/recommendations")}
+                  className="px-8 py-3 bg-transparent border-2 border-white text-white text-lg font-medium rounded-lg hover:bg-blue-600 transition"
+                >
+                  Trip Plans
+                </button>
+              </div>
+            </div>
+            <div className="md:w-1/2 flex justify-center">
+              <div className="relative w-full max-w-md h-80 bg-blue-800 rounded-lg overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 opacity-30"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-white text-2xl font-bold">Coimbatore Cityscape</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Custom Bento Grid Section (5 Images) */}
-      <section className="p-6">
-        <h2 className="text-4xl font-semibold text-center mb-8">Explore Coimbatore</h2>
-        <div className="max-w-6xl mx-auto grid grid-cols-3 gap-4 grid-rows-2">
-          <div className="col-span-2 row-span-2 overflow-hidden rounded-xl shadow-lg">
-            <img src={images[0].src} alt={images[0].title} className="w-full h-full object-cover" />
-          </div>
-          <div className="col-span-1 row-span-1 overflow-hidden rounded-xl shadow-lg">
-            <img src={images[1].src} alt={images[1].title} className="w-full h-full object-cover" />
-          </div>
-          <div className="col-span-1 row-span-1 overflow-hidden rounded-xl shadow-lg">
-            <img src={images[2].src} alt={images[2].title} className="w-full h-full object-cover" />
-          </div>
-          <div className="col-span-2 row-span-1 overflow-hidden rounded-xl shadow-lg">
-            <img src={images[3].src} alt={images[3].title} className="w-full h-full object-cover" />
-          </div>
-          <div className="col-span-1 row-span-1 overflow-hidden rounded-xl shadow-lg">
-            <img src={images[4].src} alt={images[4].title} className="w-full h-full object-cover" />
+      {/* Featured Places */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-12">Featured Destinations</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredPlaces.map((place) => (
+              <div key={place.id} className="bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition duration-300">
+                <div className="h-48 bg-gray-300 relative">
+                  <div className="absolute bottom-0 left-0 bg-blue-600 text-white px-3 py-1 rounded-tr-lg">
+                    {place.category}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-semibold">{place.name}</h3>
+                    <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm flex items-center">
+                      <span className="text-yellow-500 mr-1">★</span> {place.rating}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4">{place.description.substring(0, 100)}...</p>
+                  <button
+                    onClick={() => navigate(`/places/${place.id}`)}
+                    className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Tours Section */}
-<section className="p-6 text-center">
-  <h2 className="text-4xl font-semibold mb-6">Featured Tours</h2>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    {featuredTours.map((tour) => (
-      <div key={tour.id} className="border p-4 rounded-lg shadow-lg">
-        <div className="w-full aspect-[16/9] overflow-hidden rounded">
-          <img src={tour.image} alt={tour.name} className="w-full h-full object-cover" />
+      {/* Categories Section */}
+      <section className="py-16 px-4 bg-gray-100">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-12">Explore by Category</h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {['Tourist', 'Shopping', 'Amusement Park', 'Nature'].map((category) => (
+              <div 
+                key={category} 
+                className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition cursor-pointer"
+                onClick={() => navigate(`/places?category=${category}`)}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                  <span className="text-2xl">
+                    {category === 'Tourist' && '🏛️'}
+                    {category === 'Shopping' && '🛍️'}
+                    {category === 'Amusement Park' && '🎡'}
+                    {category === 'Nature' && '🌳'}
+                  </span>
+                </div>
+                <h3 className="text-lg font-medium">{category}</h3>
+                <p className="text-gray-600 mt-2">Explore {category.toLowerCase()} destinations</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <h3 className="text-xl font-semibold mt-2">{tour.name}</h3>
-        <p className="text-gray-600">₹{tour.price}</p>
-        <Link to={`/tours/${tour.id}`}>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded mt-2">View Details</button>
-        </Link>
-      </div>
-    ))}
-  </div>
-  <div className="mt-6">
-    <Link to="/tours">
-      <button className="bg-gray-700 text-white px-6 py-2 rounded">Show More</button>
-    </Link>
-  </div>
-</section>
+      </section>
 
-
-      {/* Footer Section */}
-      <footer className="bg-gray-900 text-white text-center p-6 mt-10">
-        <p>&copy; {new Date().getFullYear()} Coimbatore Voyage Vista. All rights reserved.</p>
-        <div className="flex justify-center gap-4 mt-2">
-          <Link to="/about" className="hover:underline">About Us</Link>
-          <Link to="/contact" className="hover:underline">Contact</Link>
-          <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
+      {/* Call to Action */}
+      <section className="py-16 px-4 bg-blue-700 text-white">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready for your Coimbatore adventure?</h2>
+          <p className="text-xl mb-8 text-blue-100">
+            Sign up now to create personalized trip plans, save your favorite places, and get exclusive recommendations!
+          </p>
+          <button
+            onClick={() => navigate("/signup")}
+            className="px-8 py-3 bg-white text-blue-700 text-lg font-medium rounded-lg hover:bg-blue-50 transition shadow-lg"
+          >
+            Create Free Account
+          </button>
         </div>
-      </footer>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl font-bold text-center mb-12">What Travelers Say</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Priya Sharma",
+                comment: "Coimbatore Explorer made our family trip so much easier! The recommendations were spot on, and we discovered places we wouldn't have found otherwise.",
+                rating: 5
+              },
+              {
+                name: "Rahul Mehta",
+                comment: "As a solo traveler, I found this app incredibly useful. The detailed information about each place helped me plan my itinerary efficiently.",
+                rating: 4
+              },
+              {
+                name: "Anjali Patel",
+                comment: "I'm a local, but this app showed me hidden gems in my own city! The user interface is intuitive and makes exploring Coimbatore fun.",
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-md">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                    <span className="text-blue-700 font-bold">{testimonial.name.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-medium">{testimonial.name}</h3>
+                    <div className="flex">
+                      {Array(testimonial.rating).fill(0).map((_, i) => (
+                        <span key={i} className="text-yellow-500">★</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600 italic">"{testimonial.comment}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
