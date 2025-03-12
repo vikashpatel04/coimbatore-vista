@@ -19,7 +19,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold flex items-center">
             <span className="text-3xl mr-2">🏞️</span>
-            Coimbatore Explorer
+            Coimbatore Voyage Vista
           </Link>
           
           {/* Mobile menu button */}

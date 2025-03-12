@@ -1,14 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-// Sample data (same as Places.jsx)
-const placesData = [
-  { id: 1, name: "Marudhamalai Temple", timing: "6 AM - 8 PM", ticket: "Free", location: "Coimbatore", rating: 4.8, description: "A beautiful Hindu temple dedicated to Lord Murugan located on a hill in the Western Ghats.", image: "/api/placeholder/800/500", category: "Religious" },
-  { id: 2, name: "Brookefields Mall", timing: "10 AM - 10 PM", ticket: "Free", location: "Coimbatore", rating: 4.5, description: "The largest shopping mall in Coimbatore featuring a mix of national and international brands, food court, and entertainment zones.", image: "/api/placeholder/800/500", category: "Shopping" },
-  { id: 3, name: "Black Thunder", timing: "9 AM - 5 PM", ticket: "₹750", location: "Mettupalayam", rating: 4.7, description: "One of the most popular water theme parks in Tamil Nadu with exciting water slides and attractions.", image: "/api/placeholder/800/500", category: "Entertainment" },
-  { id: 4, name: "Ooty Bus Transport", timing: "24/7", ticket: "Varies", location: "Coimbatore", rating: 4.3, description: "Reliable bus services connecting Coimbatore to the hill station of Ooty with scenic routes.", image: "/api/placeholder/800/500", category: "Transport" },
-  { id: 5, name: "Dhyanalinga Temple", timing: "6 AM - 8 PM", ticket: "Free", location: "Coimbatore", rating: 4.9, description: "A powerful and unique meditation space created by Sadhguru, designed as a spiritual destination.", image: "/api/placeholder/800/500", category: "Religious" },
-];
+import { placesData } from "../data/placesData";
 
 const ViewPlace = () => {
   const { id } = useParams();
@@ -114,7 +106,7 @@ const ViewPlace = () => {
         {/* Left side - Image */}
         <div className="md:w-1/2">
           <img 
-            src={place.image} 
+            src={place.images && place.images.length > 0 ? place.images[0] : "/api/placeholder/800/500"} 
             alt={place.name} 
             className="w-full h-64 object-cover rounded-lg shadow-md"
           />
@@ -212,7 +204,7 @@ const ViewPlace = () => {
                 onClick={() => navigate(`/place/${relatedPlace.id}`)}
               >
                 <img 
-                  src={relatedPlace.image} 
+                  src={relatedPlace.images && relatedPlace.images.length > 0 ? relatedPlace.images[0] : "/api/placeholder/800/500"} 
                   alt={relatedPlace.name} 
                   className="w-full h-32 object-cover rounded-lg"
                 />

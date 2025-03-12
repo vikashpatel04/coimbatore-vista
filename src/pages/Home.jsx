@@ -43,7 +43,12 @@ const Home = () => {
               </div>
             </div>
             <div className="md:w-1/2 flex justify-center">
-              <div className="relative w-full max-w-md h-80 bg-blue-800 rounded-lg overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-md h-80 rounded-lg overflow-hidden shadow-2xl">
+                <img 
+                  src="/hero.jpg" 
+                  alt="Coimbatore Cityscape" 
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 opacity-30"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <p className="text-white text-2xl font-bold">Coimbatore Cityscape</p>
@@ -63,6 +68,17 @@ const Home = () => {
             {featuredPlaces.map((place) => (
               <div key={place.id} className="bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition duration-300">
                 <div className="h-48 bg-gray-300 relative">
+                  {place.images && place.images.length > 0 ? (
+                    <img 
+                      src={place.images[0]} 
+                      alt={place.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-gray-500">No image available</span>
+                    </div>
+                  )}
                   <div className="absolute bottom-0 left-0 bg-blue-600 text-white px-3 py-1 rounded-tr-lg">
                     {place.category}
                   </div>
@@ -76,7 +92,7 @@ const Home = () => {
                   </div>
                   <p className="text-gray-600 mb-4">{place.description.substring(0, 100)}...</p>
                   <button
-                    onClick={() => navigate(`/places/${place.id}`)}
+                    onClick={() => navigate(`/place/${place.id}`)}
                     className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
                     View Details

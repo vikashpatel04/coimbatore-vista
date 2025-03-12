@@ -4,9 +4,11 @@ const About = () => {
       <h2 className="text-3xl font-semibold">About the Author</h2>
 
       {/* Profile Image Placeholder */}
-      <div className="mt-4 w-32 h-32 mx-auto rounded-full bg-gray-300"></div>
+      <div className="mt-4 w-32 h-32 mx-auto rounded-full bg-gray-300">
+        <span className="text-4xl text-gray-500 flex items-center justify-center h-full">👩‍💻</span>
+      </div>
 
-      <h3 className="mt-4 text-xl font-semibold">Name</h3>
+      <h3 className="mt-4 text-xl font-semibold">Anushiya</h3>
       <p className="mt-2 text-gray-600">
         Passionate developer creating innovative projects. Love exploring new technologies and building cool stuff!
       </p>

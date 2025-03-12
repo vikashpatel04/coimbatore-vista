@@ -126,7 +126,18 @@ const Places = () => {
               key={place.id}
               className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition"
             >
-              <div className="h-48 bg-gray-300 relative">
+              <div className="h-48 bg-gray-300 relative overflow-hidden">
+                {place.images && place.images.length > 0 ? (
+                  <img 
+                    src={place.images[0]} 
+                    alt={place.name} 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full bg-gray-200 text-gray-500">
+                    No image available
+                  </div>
+                )}
                 <div className="absolute bottom-0 left-0 bg-blue-600 text-white px-3 py-1 rounded-tr-lg">
                   {place.category}
                 </div>
